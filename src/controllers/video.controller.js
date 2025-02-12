@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/AsyncHandler.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { Video } from "../models/video.model.js"
-import ApiResponse from "../utils/ApiResponse.js"
+import {ApiResponse} from "../utils/ApiResponse.js"
 
 
 import {v2 as cloudinary} from 'cloudinary'

@@ -2,45 +2,43 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 const userSchema =new mongoose.Schema({
-    username:{
+    name:{
         type:String,
         required:true,
-        unique:true,
-        lowercase:true,
-        trim:true,
-        index:true
     },
     email:{
         type: String,
         required: true,
         unique: true,
-        lowercase: true,
-        trim : true, 
+        index:true,
     },
-    fullName:{
-        type: String,
+   
+    profileImage:{
+        type:String,
+    },
+    mobilenumber:{
+        type:String,
         required: true,
-        trim : true,
-        index:true  
-    },
-    avatar:{
-        type:String,//cloudinary url
-        required:true,
-    },
-    coverImage:{
-        type:String,//cloudinary url
-    },
-    watchHistory:[
-        {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"Video"
-        }
-
-    ],
+    }
+    ,
+    // allPost:[
+    //     {
+    //         type:mongoose.Schema.Types.ObjectId,
+    //         ref:"Post"
+    //     }
+    // ],
     password:{
         type:String,
         required:[true,"password is required"]
     },
+    role: {
+        type: String,
+        enum: ['normal', 'banned', 'admin'],
+        default: 'normal'
+      },
+      bio:{
+        type:String
+      },
     refreshToken:{
         type:String
     }
@@ -61,7 +59,7 @@ userSchema.pre("save",async function(next){
 })
 
 userSchema.methods.isPasswordCorrect = async function (password){
-   return  await bcrypt.compare(this.password,password)
+   return  await bcrypt.compare(password,this.password,)
 }
 
 
@@ -73,8 +71,8 @@ userSchema.methods.generateAccessToken =function(){
             //payload:
             _id:this._id,
             email:this.email,
-            username:this.username,
-            fullName:this.fullName,
+            name:this.name,
+           
         },
         //access token secret
         process.env.ACCESS_TOKEN_SECRET
@@ -105,10 +103,4 @@ userSchema.methods.generateRefreshToken =function(){
         }
     )
 }
-
-
-
-
-
-
 export const User = mongoose.model('User',userSchema)

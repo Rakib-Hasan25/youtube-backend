@@ -8,9 +8,6 @@ const storage = multer.diskStorage({
             cb(null,"./public/temp")
     },
 
-    
-
-
 //to configure file name 
     filename: function(req,file,cb){
         cb(null, file.originalname)

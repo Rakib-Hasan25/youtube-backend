@@ -6,11 +6,15 @@ const commentSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    video:{
+    post:{
         type:mongoose.Schema.Types.ObjectId,
-        ref :"Video"
+        ref :"Post"
     },
-    owner:{
+    image:{
+        type:string,
+        required:true
+      },
+    commentUploader:{
          type:mongoose.Schema.Types.ObjectId,
         ref :"User"
     }
